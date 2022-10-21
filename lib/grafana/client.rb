@@ -1,4 +1,4 @@
-  
+
 require 'rest-client'
 require 'json'
 require 'logger'
@@ -41,7 +41,7 @@ module Grafana
       if settings.has_key?('timeout') && settings['timeout'].to_i <= 0
         settings['timeout'] = 5
       end
-      
+
       if settings.has_key?('open_timeout') && settings['open_timeout'].to_i <= 0
         settings['open_timeout'] = 5
       end
@@ -54,14 +54,14 @@ module Grafana
         settings['url_path'] = ''
       end
 
-      proto = ( settings.has_key?('ssl') && settings['ssl'] == true ? 'https' : 'http')
+      proto = 'https'
       url = sprintf( '%s://%s:%s%s', proto, host, port, settings['url_path'] )
 
       @logger.info("Initializing API client #{url}") if @debug
       @logger.info("Options: #{settings}") if @debug
-      
+
       @api_instance = RestClient::Resource.new(
-        "#{url}", 
+        "#{url}",
         :timeout => settings['timeout'],
         :open_timeout => settings['open_timeout'],
         :headers => settings['headers']
@@ -88,7 +88,7 @@ module Grafana
       request_data = {'User' => user, 'Password' => pass}
       begin
         resp = @api_instance['/login'].post(
-          request_data.to_json, 
+          request_data.to_json,
           {:content_type => 'application/json; charset=UTF-8'}
         )
         @session_cookies = resp.cookies
