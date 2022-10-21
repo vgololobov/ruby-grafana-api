@@ -51,7 +51,8 @@ module Grafana
             "version": 5,
             "links": []
           },
-          "overwrite": false
+          "overwrite": false,
+          "folderUid": "%{folder_uid}"
         }
       ]
 
@@ -59,7 +60,8 @@ module Grafana
         title: params['title'],
         from: params['from'],
         to: params['to'],
-        rows: rows.join(',')
+        rows: rows.join(','),
+        folder_uid: params['folderUid']
       }
 
     end

@@ -49,7 +49,7 @@ module Grafana
       @logger.info("Attempting to get home dashboard (GET #{endpoint})") if @debug
       return get_request(endpoint)
     end
-    
+
     def get_dashboard_tags()
       endpoint = "/api/dashboards/tags"
       @logger.info("Attempting to get dashboard tags(GET #{endpoint})") if @debug
