@@ -46,19 +46,17 @@ module Grafana
         settings['open_timeout'] = 5
       end
 
-      if settings.has_key?('headers') && settings['headers'].class.to_s != 'Hash'
+      if settings.has_key?('headers') && !settings['headers'].kind_of?(Hash)
         settings['headers'] = {}
       end
 
-      if settings.has_key?('url_path') && settings['url_path'].class.to_s != 'String'
+      if settings.has_key?('url_path') && !settings['url_path'].kind_of?(String)
         settings['url_path'] = ''
       end
 
       proto = 'https'
       url = sprintf( '%s://%s:%s%s', proto, host, port, settings['url_path'] )
-
-      @logger.info("Initializing API client #{url}") if @debug
-      @logger.info("Options: #{settings}") if @debug
+      url = host
 
       @api_instance = RestClient::Resource.new(
         "#{url}",

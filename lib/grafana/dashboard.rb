@@ -16,51 +16,41 @@ module Grafana
 
     def get_dashboard_list()
       endpoint = "/api/search"
-      @logger.info("Attempting to get dashboard list (GET /api/search)") if @debug
       return get_request(endpoint)
     end
 
-    def get_dashboard(name='')
-      name = self.create_slug(name)
-      endpoint = "/api/dashboards/db/#{name}"
-      @logger.info("Attempting to get dashboard (GET /api/dashboards/db/#{name})") if @debug
+    def get_dashboard_by_uid(uid='')
+      uid = self.create_slug(uid)
+      endpoint = "/api/dashboards/uid/#{uid}"
       return get_request(endpoint)
     end
 
     def create_dashboard(properties={})
       endpoint = "/api/dashboards/db"
       dashboard = self.build_template(properties)
-      @logger.info("Creating dashboard: #{properties['title']} (POST /api/dashboards/db)") if @debug
       return post_request(endpoint, dashboard)
     end
 
-    def delete_dashboard(name)
-      name = self.create_slug(name)
-      data = self.get_dashboard( name )
-      id   = data['dashboard']['id'] ? data['dashboard']['id'] : nil
-
-      endpoint = "/api/dashboards/db/#{name}"
-      @logger.info("Deleting dahsboard ID #{id} (DELETE #{endpoint})") if @debug
+    def delete_dashboard_bu_uid(uid)
+      uid = self.create_slug(uid)
+      endpoint = "/api/dashboards/uid/#{uid}"
       return delete_request(endpoint)
     end
 
     def get_home_dashboard()
       endpoint = "/api/dashboards/home"
-      @logger.info("Attempting to get home dashboard (GET #{endpoint})") if @debug
       return get_request(endpoint)
     end
 
     def get_dashboard_tags()
       endpoint = "/api/dashboards/tags"
-      @logger.info("Attempting to get dashboard tags(GET #{endpoint})") if @debug
       return get_request(endpoint)
     end
 
     def search_dashboards(params={})
       params['query'] = (params['query'].length >= 1 ? CGI::escape(params['query']) : '' )
-      params['starred'] = (params['starred'] ? 'true' : 'false')
+      params['starred'] = (!!params['starred']).to_s
       endpoint = "/api/search/?query=#{params['query']}&starred=#{params['starred']}&tag=#{params['tags']}"
-      @logger.info("Attempting to search for dashboards (GET #{endpoint})") if @debug
       return get_request(endpoint)
     end
 

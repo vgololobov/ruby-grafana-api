@@ -44,14 +44,14 @@ module Grafana
           resp = @api_instance[endpoint].delete(@headers)
         else
           @logger.error("Error: #{__method__} is not a valid request method.") if @debug
-          return false
+          return resp
         end
 
         if (resp.code.to_i >= 200 && resp.code.to_i <= 299) || (resp.code.to_i >= 400 && resp.code.to_i <= 499)
           return JSON.parse(resp.body)
         else
           @logger.error("#{__method__} on #{endpoint} failed: HTTP #{resp.code} - #{resp.body}") if @debug
-          return false
+          return resp
         end
 
       rescue => e

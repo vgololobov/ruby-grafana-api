@@ -5,13 +5,11 @@ module Grafana
 
     def get_all_users()
       endpoint = "/api/users"
-      @logger.info("Getting all users (GET #{endpoint})") if @debug
       return get_request(endpoint)
     end
 
     def get_user_by_id(id)
       endpoint = "/api/users/#{id}"
-      @logger.info("Getting user ID #{id} (GET #{endpoint})") if @debug
       return get_request(endpoint)
     end
 
@@ -42,7 +40,6 @@ module Grafana
 
     def get_user_orgs(userid)
       endpoint = "/api/users/#{userid}/orgs"
-      @logger.info("Getting organizations for user #{userid} (GET #{endpoint})") if @debug
       return get_request(endpoint)
     end
 
