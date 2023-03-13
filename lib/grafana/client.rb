@@ -36,7 +36,7 @@ module Grafana
     include Grafana::Login
     include Grafana::Admin
 
-    def initialize(host="localhost", port=3000, user='admin', pass='', settings={})
+    def initialize(host="localhost", port=3000, user='admin', pass='', url=nil, settings={})
 
       if settings.has_key?('timeout') && settings['timeout'].to_i <= 0
         settings['timeout'] = 5
@@ -54,9 +54,10 @@ module Grafana
         settings['url_path'] = ''
       end
 
+
       proto = 'https'
-      url = sprintf( '%s://%s:%s%s', proto, host, port, settings['url_path'] )
-      url = host
+      url ||= sprintf( '%s://%s:%s%s', proto, host, port, settings['url_path'] )
+      
 
       @api_instance = RestClient::Resource.new(
         "#{url}",
