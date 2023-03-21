@@ -27,6 +27,7 @@ module Grafana
 
     def create_data_source(ds={})
       if ds == {} || !ds.has_key?('name') || !ds.has_key?('database')
+        puts "key error"
         return false
       end
       endpoint = "/api/datasources"

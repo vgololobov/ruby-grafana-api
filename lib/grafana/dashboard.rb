@@ -31,6 +31,11 @@ module Grafana
       return post_request(endpoint, dashboard)
     end
 
+    def update_dashboard(dashboard)
+      endpoint = "/api/dashboards/db"
+      return post_request(endpoint, dashboard.to_json)
+    end
+
     def delete_dashboard_bu_uid(uid)
       uid = self.create_slug(uid)
       endpoint = "/api/dashboards/uid/#{uid}"
